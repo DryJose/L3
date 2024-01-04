@@ -43,4 +43,3 @@ class Favorite extends Component {
  }
  
  export const favoriteComp = new Favorite(html);
- 

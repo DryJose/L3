@@ -53,23 +53,3 @@ class FavoriteService {
 }
 
 export const favoriteService = new FavoriteService();
-
-    // private async _updCounters() {
-    //     const products = await this.get();
-    //     const count = products.length >= 10 ? '9+' : products.length;
-
-    //     //@ts-ignore
-    //     document.querySelectorAll('.js__favorite-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
-    // }
-
-    // async updateFavoriteButton() {
-    //     const favoriteButton = document.querySelector('.favorites');
-    //     const products = await this.get();
-    //     if (products.length < 1) {
-    //         favoriteButton?.classList.add('hidden');
-    //         localStorage.setItem('favoriteButtonHidden', 'true');
-    //     } else {
-    //         favoriteButton?.classList.remove('hidden');
-    //         localStorage.removeItem('favoriteButtonHidden');
-    //     }
-    // }
