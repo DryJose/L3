@@ -3,6 +3,7 @@ import { View } from '../../utils/view';
 import html from './productList.tpl.html';
 import { ProductData } from 'types';
 import { Product } from '../product/product';
+import { metricService } from '../../services/metric.service';
 
 export class ProductList {
   view: View;
@@ -31,5 +32,7 @@ export class ProductList {
       productComp.render();
       productComp.attach(this.view.root);
     });
+    metricService.init();
+    metricService.postNavigateEvent();
   }
 }

@@ -5,6 +5,8 @@ import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 import { favoriteService } from '../../services/favorite.service';
+import { metricService } from '../../services/metric.service';
+
 
 class ProductDetail extends Component {
 	more: ProductList;
@@ -25,6 +27,7 @@ class ProductDetail extends Component {
 		this.product = await productResp.json();
 
 		if (!this.product) return;
+		metricService.postNavigateEvent();
 
 		const { id, src, name, description, salePriceU } = this.product;
 
@@ -61,6 +64,7 @@ class ProductDetail extends Component {
 			this._removeFromCart();
 		} else {
 			cartService.addProduct(this.product);
+			metricService.postAddToCartEvent(this.product);
 			this._setInCart();
 		}
 		this.view.btnBuy.onclick = this._toggleCart.bind(this, !isInCart);
