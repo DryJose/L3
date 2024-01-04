@@ -6,6 +6,7 @@ import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 import { favoriteService } from '../../services/favorite.service';
 import { metricService } from '../../services/metric.service';
+import { userService } from '../../services/user.service';
 
 
 class ProductDetail extends Component {
@@ -23,7 +24,13 @@ class ProductDetail extends Component {
 		const urlParams = new URLSearchParams(window.location.search);
 		const productId = Number(urlParams.get('id'));
 
-		const productResp = await fetch(`/api/getProduct?id=${productId}`);
+		await userService.init()
+
+		const productResp = await fetch(`/api/getProduct?id=${productId}`, {
+			headers: {
+				'UserID': window.userId
+			  }
+			});
 		this.product = await productResp.json();
 
 		if (!this.product) return;
@@ -43,18 +50,25 @@ class ProductDetail extends Component {
 		this.view.btnBuy.onclick = this._toggleCart.bind(this, isInCart);
 		this.view.btnFavorite.onclick = this._toggleFavorite.bind(this, isInFavorite);
 
-		fetch(`/api/getProductSecretKey?id=${id}`)
+		fetch(`/api/getProductSecretKey?id=${id}`, {
+			headers: {
+				'UserID': window.userId
+			  }
+			})
 			.then((res) => res.json())
 			.then((secretKey) => {
 				this.view.secretKey.setAttribute('content', secretKey);
 			});
-
-		fetch('/api/getPopularProducts')
+		fetch('/api/getPopularProducts', {
+				headers: {
+				  'UserID': window.userId
+				}
+			})
 			.then((res) => res.json())
 			.then((products) => {
-				this.more.update(products);
-			});
-	}
+				this.more.update(products);	
+	});
+}
 
 
 	private _toggleCart(isInCart: Boolean) {
